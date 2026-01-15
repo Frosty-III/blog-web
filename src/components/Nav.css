@@ -1,0 +1,110 @@
+/* Complete redesign with modern dark theme and teal accents */
+.nav {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border-bottom: 1px solid #00d4ff20;
+  padding: 16px 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 4px 12px rgba(0, 212, 255, 0.08);
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Updated logo styling with teal accent and smooth effects */
+.nav-logo {
+  font-weight: 700;
+  font-size: 24px;
+  color: #00d4ff;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.nav-logo:hover {
+  color: #00ffff;
+  text-shadow: 0 0 8px rgba(0, 212, 255, 0.4);
+}
+
+/* Menu styling with better spacing and hover effects */
+.nav-menu {
+  display: flex;
+  list-style: none;
+  gap: 24px;
+  align-items: center;
+}
+
+.nav-menu a {
+  color: #e0e0e0;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.nav-menu a:hover {
+  color: #00d4ff;
+}
+
+.nav-menu a::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #00d4ff;
+  transition: width 0.3s ease;
+}
+
+.nav-menu a:hover::after {
+  width: 100%;
+}
+
+/* User info styling with subtle background */
+.nav-user {
+  font-size: 14px;
+  color: #a0a0a0;
+  padding: 6px 12px;
+  border-radius: 6px;
+  background: rgba(0, 212, 255, 0.05);
+  transition: all 0.3s ease;
+}
+
+.nav-user:hover {
+  color: #00d4ff;
+  background: rgba(0, 212, 255, 0.1);
+}
+
+/* Modern logout button with teal accent and smooth animations */
+.logout-btn {
+  background-color: #00d4ff;
+  color: #1a1a2e;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 12px rgba(0, 212, 255, 0.2);
+}
+
+.logout-btn:hover {
+  background-color: #00ffff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 212, 255, 0.3);
+}
+
+.logout-btn:active {
+  transform: translateY(0);
+}
