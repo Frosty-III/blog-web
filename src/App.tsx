@@ -17,7 +17,7 @@ function AppContent() {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    // Check if user is already logged in
+   
     const checkSession = async () => {
       const { data: { session } } = await supabase.auth.getSession()
       if (session?.user) {
@@ -27,7 +27,7 @@ function AppContent() {
 
     checkSession()
 
-    // Listen for auth changes
+    
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_, session) => {
       if (session?.user) {
         dispatch(setUser({ email: session.user.email || "", id: session.user.id }))

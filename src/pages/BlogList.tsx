@@ -22,15 +22,15 @@ export default function BlogList() {
     const fetchBlogs = async () => {
       dispatch(setLoading(true))
 
-      // Get total count of blogs
+     
       const { count } = await supabase.from("blogs").select("*", { count: "exact", head: true })
 
       setTotalCount(count || 0)
 
-      // Calculate offset based on current page
+    
       const offset = (currentPage - 1) * ITEMS_PER_PAGE
 
-      // Fetch paginated blogs
+     
       const { data, error } = await supabase
         .from("blogs")
         .select("*")

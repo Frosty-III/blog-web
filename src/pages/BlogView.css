@@ -1,4 +1,3 @@
-/* Modern blog post view with premium typography */
 .blog-view-container {
   max-width: 900px;
   margin: 0 auto;
@@ -116,6 +115,10 @@
   padding: 32px;
   border-radius: 12px;
   border: 1px solid var(--border-color);
+  word-break: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
+  white-space: normal;
 }
 
 .blog-content p {
