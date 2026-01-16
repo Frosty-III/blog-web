@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
 import { getComments } from "../lib/commentService";
-import CommentForm from "../components/CommentForm";
-import CommentList from "../components/commentList";
 
 interface Comment {
   id: string;
@@ -16,27 +14,7 @@ interface CommentListProps {
   refreshTrigger: number;
 }
 
-export default function BlogPage() {
-  const [refreshComments, setRefreshComments] = useState(0);
-  const blogId = "your-blog-id"; 
-  return (
-    <div>
-      
-      
-      <CommentForm 
-        blogId={blogId} 
-        onCommentAdded={() => setRefreshComments(prev => prev + 1)} 
-      />
-      
-      <CommentList 
-        blogId={blogId} 
-        refreshTrigger={refreshComments} 
-      />
-    </div>
-  );
-}
-
-export function CommentList({ blogId, refreshTrigger }: CommentListProps) {
+export default function CommentList({ blogId, refreshTrigger }: CommentListProps) {
   const [comments, setComments] = useState<Comment[]>([]);
   const [loading, setLoading] = useState(false);
 
