@@ -5,7 +5,7 @@ import { createComment } from "../lib/commentService";
 
 interface CommentFormProps {
   blogId: string;
-  onCommentAdded: () => void; // callback to refresh comments
+  onCommentAdded: () => void; 
 }
 
 export default function CommentForm({ blogId, onCommentAdded }: CommentFormProps) {
@@ -30,7 +30,7 @@ export default function CommentForm({ blogId, onCommentAdded }: CommentFormProps
       });
       setContent("");
       setImageFile(null);
-      onCommentAdded(); // refresh comment list
+      onCommentAdded(); 
     } catch (err: any) {
       console.error(err);
       setError("Failed to post comment");

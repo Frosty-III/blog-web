@@ -6,7 +6,7 @@ export async function uploadImage(file: File,
         const fileExt = file.name.split('.').pop();
         const fileName = `${Date.now()}.${fileExt}`
 
-        // Get current user
+       
         const { data: { user } } = await supabase.auth.getUser();
         
         if (!user) {
