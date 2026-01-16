@@ -13,7 +13,7 @@ export default function ViewBlog() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const { currentBlog, loading } = useSelector((state: RootState) => state.blog)
-  const { user } = useSelector((state: RootState) => state.auth)
+  const { user } = useSelector((state: RootState) => state.auth)  
 
   useEffect(() => {
     const fetchBlog = async () => {
@@ -33,10 +33,7 @@ export default function ViewBlog() {
   }, [id, dispatch])
 
   if (loading) return <p>Loading...</p>
-
-  if (!currentBlog) {
-    return <p>Blog not found</p>
-  }
+  if (!currentBlog) return <p>Blog not found</p>
 
   const isOwner = user?.id === currentBlog.user_id
 
@@ -47,7 +44,15 @@ export default function ViewBlog() {
         <div className="blog-meta">
           <span>{new Date(currentBlog.created_at).toLocaleDateString()}</span>
         </div>
+        {currentBlog.image_url && (
+          <img
+            src={currentBlog.image_url}
+            alt={currentBlog.title}
+            className="blog-image"
+          />
+        )}
         <div className="blog-content">{currentBlog.content}</div>
+
         {isOwner && (
           <div className="blog-actions">
             <button onClick={() => navigate(`/blog/${currentBlog.id}/edit`)} className="edit-btn">
