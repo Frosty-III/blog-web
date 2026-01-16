@@ -1,11 +1,12 @@
 "use client"
 
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useParams, useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { supabase } from "../lib/supabaseClient"
 import { setCurrentBlog } from "../store/slices/blogSlice"
 import type { RootState } from "../store"
+import CommentForm from "../components/CommentForm"
 import "./BlogView.css"
 
 export default function ViewBlog() {
@@ -15,11 +16,35 @@ export default function ViewBlog() {
   const { currentBlog, loading } = useSelector((state: RootState) => state.blog)
   const { user } = useSelector((state: RootState) => state.auth)  
 
+  const [comments, setComments] = useState<any[]>([])
+
+
+  const fetchComments = async () => {
+    if (!id) return
+    const { data, error } = await supabase
+      .from("comments")
+      .select("*")
+      .eq("blog_id", id)
+      .order("created_at", { ascending: true })
+
+    if (error) {
+      console.error("Error fetching comments:", error)
+      return
+    }
+
+    setComments(data || [])
+  }
+
+  
   useEffect(() => {
     const fetchBlog = async () => {
       if (!id) return
 
-      const { data, error } = await supabase.from("blogs").select("*").eq("id", id).single()
+      const { data, error } = await supabase
+        .from("blogs")
+        .select("*")
+        .eq("id", id)
+        .single()
 
       if (error) {
         console.error("Error fetching blog:", error)
@@ -30,6 +55,7 @@ export default function ViewBlog() {
     }
 
     fetchBlog()
+    fetchComments()
   }, [id, dispatch])
 
   if (loading) return <p>Loading...</p>
@@ -44,6 +70,7 @@ export default function ViewBlog() {
         <div className="blog-meta">
           <span>{new Date(currentBlog.created_at).toLocaleDateString()}</span>
         </div>
+
         {currentBlog.image_url && (
           <img
             src={currentBlog.image_url}
@@ -51,11 +78,45 @@ export default function ViewBlog() {
             className="blog-image"
           />
         )}
+
         <div className="blog-content">{currentBlog.content}</div>
+
+        
+        <CommentForm blogId={currentBlog.id} onCommentAdded={fetchComments} />
+
+        
+        <div style={{ marginTop: "20px" }}>
+          {comments.map((c) => (
+            <div
+              key={c.id}
+              style={{
+                marginBottom: "15px",
+                border: "1px solid #ccc",
+                padding: "10px",
+                borderRadius: "8px",
+              }}
+            >
+              <p>
+                <strong>{c.user_id}</strong> says:
+              </p>
+              <p>{c.content}</p>
+              {c.image_url && (
+                <img
+                  src={c.image_url}
+                  alt="comment"
+                  style={{ maxWidth: "200px", marginTop: "10px" }}
+                />
+              )}
+            </div>
+          ))}
+        </div>
 
         {isOwner && (
           <div className="blog-actions">
-            <button onClick={() => navigate(`/blog/${currentBlog.id}/edit`)} className="edit-btn">
+            <button
+              onClick={() => navigate(`/blog/${currentBlog.id}/edit`)}
+              className="edit-btn"
+            >
               Edit
             </button>
             <button
