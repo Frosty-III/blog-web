@@ -48,7 +48,7 @@ export default function CreateBlog() {
         updated_at: new Date().toISOString(),
         
       },
-    ]).select().
+    ]).select()
 
     if (insertError) {
         setError(insertError.message)
@@ -59,12 +59,13 @@ export default function CreateBlog() {
         dispatch(addBlog(data[0]))
         navigate(`/blog/${data[0].id}`)
       }
-      catch (err) {
+     } catch (err) {
         console.error(err);
         setError("Failed to create blog. Please try again.")
   } finally {
     setLoading(false)
-
+  } 
+}
   return (
     <div className="blog-form-container">
       <div className="blog-form">

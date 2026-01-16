@@ -115,3 +115,14 @@
   font-size: 13px;
   line-height: 1.5;
 }
+
+.blog-form input[type="file"] {
+  padding: 6px 10px;
+  border-radius: 8px;
+  background-color: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  display: block;
+  width: 100%;
+  cursor: pointer;
+}
