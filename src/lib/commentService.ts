@@ -8,7 +8,7 @@ interface CreateCommentParams {
 }
 
 export async function createComment({blogId, content, imageFile}: CreateCommentParams) {
-    
+    // Get current user
     const { data: { user } } = await supabase.auth.getUser();
     
     if (!user) {

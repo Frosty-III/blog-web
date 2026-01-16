@@ -25,7 +25,6 @@ export default function CommentForm({ blogId, onCommentAdded }: CommentFormProps
     try {
       await createComment({
         blogId,
-        userId: user.id,
         content,
         imageFile: imageFile || undefined,
       });
