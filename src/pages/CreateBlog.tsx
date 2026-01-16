@@ -9,6 +9,9 @@ import { supabase } from "../lib/supabaseClient"
 import { addBlog } from "../store/slices/blogSlice"
 import type { RootState } from "../store"
 import "./BlogForm.css"
+import { uploadImage } from "../lib/ImageUpload"
+import { create } from "domain"
+import { set } from "react-hook-form"
 
 export default function CreateBlog() {
   const [title, setTitle] = useState("")
@@ -18,6 +21,7 @@ export default function CreateBlog() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const { user } = useSelector((state: RootState) => state.auth)
+  const [image, setImage] = useState<File | null>(null)
 
   if (!user) {
     return <p className="error-message">Please login to create a blog</p>
@@ -29,34 +33,37 @@ export default function CreateBlog() {
     setLoading(true)
 
     try {
-      const { data, error: insertError } = await supabase
-        .from("blogs")
-        .insert([
-          {
-            title,
-            content,
-            user_id: user.id,
-            created_at: new Date().toISOString(),
-            updated_at: new Date().toISOString(),
-          },
-        ])
-        .select()
+      let imageUrl: string | null = null
 
-      if (insertError) {
+      if (image) {
+        imageUrl = await uploadImage(image, "blog-images")
+    }
+    const { data, error: insertError } = await supabase.from("blogs").insert([
+      {
+        title, 
+        content,
+         image_url: imageUrl,
+        user_id: user.id,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+        
+      },
+    ]).select().
+
+    if (insertError) {
         setError(insertError.message)
         return
       }
 
       if (data && data.length > 0) {
         dispatch(addBlog(data[0]))
-        navigate("/")
+        navigate(`/blog/${data[0].id}`)
       }
-    } catch (err) {
-      setError("Failed to create blog")
-    } finally {
-      setLoading(false)
-    }
-  }
+      catch (err) {
+        console.error(err);
+        setError("Failed to create blog. Please try again.")
+  } finally {
+    setLoading(false)
 
   return (
     <div className="blog-form-container">
@@ -71,6 +78,10 @@ export default function CreateBlog() {
           <div>
             <label>Content:</label>
             <textarea placeholder="Enter blog content" value={content} onChange={(e) => setContent(e.target.value)} rows={10} required />
+          </div>
+          <div>
+            <label>Image (optional):</label>
+            <input type="file" accept="image/*" onChange={(e) => setImage(e.target.files ? e.target.files[0] : null)} />
           </div>
           <div className="form-actions">
             <button type="submit" disabled={loading}>
