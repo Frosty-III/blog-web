@@ -1,5 +1,5 @@
-import {supabase} from '../lib/supabaseClient';
-import { uploadImage } from '../lib/ImageUpload';
+import {supabase} from './supabaseClient';
+import { uploadImage } from './ImageUpload';
 
 
 interface CreateCommentParams {
@@ -17,8 +17,8 @@ export async function createComment({blogId, userId, content, imageFile}: Create
     }
 
     const {data, error} = await supabase.from('comments').insert([
-        {blog_id: blogId, user_id: userId, content, image_url: imageUrl, created_at: new Date().toISOString()}
-    ])
+        {blog_id: blogId, user_id: userId, comment_text: content, image_url: imageUrl, created_at: new Date().toISOString()}
+    ]).select();
 
     if (error) throw error;
     return data;
