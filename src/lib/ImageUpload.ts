@@ -1,4 +1,3 @@
-
 import { supabase } from "./supabaseClient";
 
 export async function uploadImage(file: File,
@@ -13,7 +12,7 @@ export async function uploadImage(file: File,
 
         if (error) throw error
 
-       const {data} = await supabase.storage
+        const {data} = supabase.storage
         .from(bucket)
         .getPublicUrl(fileName)
 
