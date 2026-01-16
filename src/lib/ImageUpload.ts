@@ -13,7 +13,7 @@ export async function uploadImage(file: File,
 
         if (error) throw error
 
-        const {data} = supabase.storage
+       const {data} = await supabase.storage
         .from(bucket)
         .getPublicUrl(fileName)
 
