@@ -20,7 +20,11 @@ export default function ViewBlog() {
 
 
   const fetchComments = async () => {
-    if (!id) return
+    console.log("fetchComments called with id:", id)
+    if (!id) {
+      console.warn("No id available for fetching comments")
+      return
+    }
     const { data, error } = await supabase
       .from("comments")
       .select("*")
@@ -32,6 +36,7 @@ export default function ViewBlog() {
       return
     }
 
+    console.log("Fetched comments:", data)
     setComments(data || [])
   }
 
@@ -55,8 +60,11 @@ export default function ViewBlog() {
     }
 
     fetchBlog()
-    fetchComments()
   }, [id, dispatch])
+
+  useEffect(() => {
+    fetchComments()
+  }, [id])
 
   if (loading) return <p>Loading...</p>
   if (!currentBlog) return <p>Blog not found</p>
