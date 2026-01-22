@@ -40,9 +40,9 @@ export default function CommentList({ blogId, refreshTrigger }: CommentListProps
     <div style={{ marginTop: "30px" }}>
       <h3>Comments ({comments.length})</h3>
       {comments.map((comment) => (
-        <div key={comment.id} style={{ border: "1px solid #ccc", padding: "15px", marginBottom: "15px", borderRadius: "8px" }}>
-          <p><strong>{comment.user_id}</strong> says:</p>
-          <p style={{ fontSize: "16px", color: "#000" }}>{comment.comment_text}</p>
+        <div key={comment.id} style={{ border: "1px solid #ccc", padding: "15px", marginBottom: "15px", borderRadius: "8px", backgroundColor: "#1e293b" }}>
+          <p><strong style={{ color: "#f7f4f4" }}>{comment.user_id}</strong> says:</p>
+          <p style={{ fontSize: "16px", color: "#f7f4f4" }}>{comment.comment_text}</p>
           {comment.image_url && <img src={comment.image_url} alt="comment" style={{ maxWidth: "300px", borderRadius: "8px", marginTop: "10px" }} />}
           <small style={{ color: "#666" }}>{new Date(comment.created_at).toLocaleString()}</small>
         </div>
