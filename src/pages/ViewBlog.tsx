@@ -92,14 +92,15 @@ export default function ViewBlog() {
               style={{
                 marginBottom: "15px",
                 border: "1px solid #ccc",
-                padding: "10px",
+                padding: "15px",
                 borderRadius: "8px",
+                backgroundColor: "#1e293b"
               }}
             >
               <p>
-                <strong>{c.user_id}</strong> says:
+                <strong style={{ color: "#f7f4f4" }}>{c.user_id}</strong> says:
               </p>
-              <p>{c.content}</p>
+              <p style={{ color: "#f7f4f4" }}>{c.comment_text}</p>
               {c.image_url && (
                 <img
                   src={c.image_url}
